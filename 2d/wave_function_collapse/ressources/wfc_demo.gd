@@ -66,8 +66,9 @@ func setup_config() -> void:
 			).get_or_add(left_tile,true)
 		adjacencies.get_or_add([cell_tile,TileSet.CELL_NEIGHBOR_RIGHT_SIDE],Dictionary()
 			).get_or_add(right_tile,true)
-		var weight = sample_layer.get_cell_tile_data(cell).get_custom_data("weight")
-		weights[cell_tile] = weight
+		if sample_layer.tile_set.get_custom_data_layer_by_name("weight") != -1:
+			var weight = sample_layer.get_cell_tile_data(cell).get_custom_data("weight")
+			weights[cell_tile] = weight
 	# set up super positions for unfilled output tiles
 	# already filled tiles need to cause an update
 	for cell in output_cells:
@@ -85,19 +86,11 @@ func constraint_possibilites(neighbor_possibilites,from_direction,cell) -> bool:
 	var possible_tiles = super_positions[cell]
 	var possibilities_count = len(possible_tiles)
 	var direction = from_direction
-	#TileSet.CELL_NEIGHBOR_TOP_SIDE
-	#if from_direction == TileSet.CELL_NEIGHBOR_TOP_SIDE:
-		#direction = TileSet.CELL_NEIGHBOR_BOTTOM_SIDE
-	#elif from_direction == TileSet.CELL_NEIGHBOR_LEFT_SIDE:
-		#direction = TileSet.CELL_NEIGHBOR_RIGHT_SIDE
-	#elif from_direction == TileSet.CELL_NEIGHBOR_RIGHT_SIDE:
-		#direction = TileSet.CELL_NEIGHBOR_LEFT_SIDE
 	var still_possible : Array[Vector2i]
 	still_possible.clear()
 	for tile in possible_tiles:
 		for neighbor_tile in neighbor_possibilites:
-			# lookup if this is a valid adjacency - we looking from the neighbor side
-			# so it's reversed
+			# lookup if this is a valid adjacency
 			if adjacencies[[neighbor_tile,direction]].has(tile):
 				still_possible.push_back(tile)
 				break
@@ -146,12 +139,15 @@ func render_tile_to_ouput(cell: Vector2i, output_layer: TileMapLayer) -> void:
 # if not all tiles shall have equal chance, this would be the place
 # to model a weighted choice
 func choose_tile(cell: Vector2i) -> Vector2i:
-	var possible_tiles : Array[Vector2i]
-	possible_tiles.clear()
-	for choice in super_positions[cell]:
-		if weights[choice] > 0.0:
-			possible_tiles.push_back(choice)
-	return possible_tiles.pick_random()
+	if len(weights.keys()) > 0:
+		var possible_tiles : Array[Vector2i]
+		possible_tiles.clear()
+		for choice in super_positions[cell]:
+			if weights[choice] > 0.0:
+				possible_tiles.push_back(choice)
+		return possible_tiles.pick_random()
+	else:
+		return super_positions[cell].pick_random()
 
 func draw_output() -> void:
 	sample_cells.clear()
@@ -164,7 +160,7 @@ func draw_output() -> void:
 	weights.clear()
 	if sample_layer and config_layer:
 		setup_config()
-		print("drawing")
+		print("starting generation")
 		var output_layer : TileMapLayer = sample_layer.duplicate()
 		output_layer.tile_set = sample_layer.tile_set.duplicate()
 		add_child(output_layer)
@@ -210,3 +206,5 @@ func draw_output() -> void:
 			cell_update_stack.push_back(cell_to_set_next)
 			if slow_down_output:
 				await get_tree().create_timer(0.1).timeout
+
+		print("done with generation")
