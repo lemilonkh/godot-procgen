@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=4 uid="uid://b8uarrqidojr4"]
 
-[ext_resource type="Script" path="res://ressources/wfc_demo.gd" id="1_euq3v"]
+[ext_resource type="Script" path="res://wfc_demo.gd" id="1_euq3v"]
 [ext_resource type="Texture2D" uid="uid://bw7ikxm6gtrfa" path="res://ressources/kenney/tilemap_tiny_town_packed.png" id="2_svoui"]
-[ext_resource type="TileSet" path="res://ressources/config_tiles.tres" id="3_tnqfr"]
+[ext_resource type="TileSet" uid="uid://dphuuy3sl44ig" path="res://ressources/config_tiles.tres" id="3_tnqfr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pjvqb"]
 texture = ExtResource("2_svoui")

@@ -190,6 +190,8 @@ func draw_output() -> void:
 					else:
 						known_tiles[cell_key] = super_positions[cell_key][0]
 						render_tile_to_ouput(cell_key, output_layer)
+						if slow_down_output:
+							await get_tree().create_timer(0.1).timeout
 					super_positions.erase(cell_key)
 				else:
 					if entropy < least_entropy:

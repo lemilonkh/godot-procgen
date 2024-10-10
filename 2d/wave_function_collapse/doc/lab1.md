@@ -24,7 +24,7 @@ In fact the algorithm is implemented as a tool script. If you don't know tool sc
 
 The button is made to click. Go ahead. Click it. If you left the sample and config layer untouched, you should get an output that is similar to this:
 
-![screenshot showing a variante of the generated output](sample_output1.jpg "sample output")
+![screenshot showing a variant of the generated output](sample_output1.jpg "sample output")
 
 Each time you trigger the generation a new tile map layer called output is generated. Godot will increment a number behind the name automatically to make them unique. You may notice that the generations are quite similar. Later on we will fix this up a bit. By the way, if you want a fancy animation you can click "slow down output" to toggle this export variable below the "draw output" boolean. This just adds a tiny delay after each new tile is revealed.
 
@@ -85,7 +85,7 @@ Simply put if we want to know which of the possible tiles to put down, we have t
 
 ## Final words
 
-Feel free to go crazy a bit with the template. Maybe draw your own tiles and see what cool worlds you can generate with it.
+Feel free to go crazy a bit with the template. Maybe draw your own tiles and see what cool worlds you can generate with it. If you want to change the tile set make sure to just replace the texture, the implementation here is not really with multiple source ids (textures).
 
 I hope you liked this lab. It was fun writing it. Do try the other labs if you feel up to it!
 

@@ -139,15 +139,7 @@ func render_tile_to_ouput(cell: Vector2i, output_layer: TileMapLayer) -> void:
 # if not all tiles shall have equal chance, this would be the place
 # to model a weighted choice
 func choose_tile(cell: Vector2i) -> Vector2i:
-	if len(weights.keys()) > 0:
-		var possible_tiles : Array[Vector2i]
-		possible_tiles.clear()
-		for choice in super_positions[cell]:
-			if weights[choice] > 0.0:
-				possible_tiles.push_back(choice)
-		return possible_tiles.pick_random()
-	else:
-		return super_positions[cell].pick_random()
+	return super_positions[cell].pick_random()
 
 func draw_output() -> void:
 	sample_cells.clear()
