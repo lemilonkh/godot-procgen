@@ -14,3 +14,7 @@ config/name="scatter"
 run/main_scene="res://addons/proton_scatter/demos/showcase.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/proton_scatter/plugin.cfg")
